@@ -11,7 +11,8 @@ export function SpaceShip (props) {
         setPastPosition([0,0])
     }
 
-    const time = useRef(0)
+    const Speed = 0.2
+
 
     const gltf = useLoader(
         GLTFLoader,
@@ -42,7 +43,6 @@ export function SpaceShip (props) {
     ,[gltf])
 
         useFrame((state,delta)=>{
-            time.current += 0.009  // => speed
             document.onkeydown =function (e) {
             if (e.keyCode === 37 && props.planePosition.x === -2) { // position => right move => left
                 setPastPosition([0,1])
@@ -58,36 +58,32 @@ export function SpaceShip (props) {
     }
 
             if (props.planePosition.x === 2) { // left side
-                gltf.scene.position.x += time.current
+                gltf.scene.position.x += Speed;
                 if (gltf.scene.position.x > 2 ) {
                     gltf.scene.position.x = 2
-                    time.current = 0
                     gltf.scene.rotation.z = 0.4
                     gltf.scene.rotation.y = -0.1
                 }
             }else if ( props.planePosition.x === 0 && pastPosition[0] === 1){
-                gltf.scene.position.x -= time.current
+                gltf.scene.position.x -= Speed;
                 if (gltf.scene.position.x < 0 ) {
                     gltf.scene.position.x = 0
-                    time.current = 0
                     resetPastPosition()
                     gltf.scene.rotation.z = 0
                     gltf.scene.rotation.y = 0
                 }
             }else if ( props.planePosition.x === 0 &&  pastPosition[1] === 1){
-                gltf.scene.position.x += time.current
+                gltf.scene.position.x += Speed;
                 if (gltf.scene.position.x > 0 ) {
                     gltf.scene.position.x = 0
-                    time.current = 0
                     resetPastPosition()
                     gltf.scene.rotation.z = 0
                     gltf.scene.rotation.y = 0
                 }
             }else if (props.planePosition.x === -2){
-                gltf.scene.position.x -= time.current
+                gltf.scene.position.x -= Speed; 
                 if (gltf.scene.position.x < -2 ) {
                     gltf.scene.position.x = -2
-                    time.current = 0
                     gltf.scene.rotation.z = -0.4
                     gltf.scene.rotation.y = 0.1
                 }
